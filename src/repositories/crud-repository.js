@@ -25,6 +25,9 @@ class CrudRepository {
         id: id,
       },
     });
+    if(response===0){
+      throw new AppError("The record you are trying to delete is not found", StatusCodes.NOT_FOUND);
+    }
     return response;
   }
 
