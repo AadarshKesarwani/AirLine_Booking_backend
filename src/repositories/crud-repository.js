@@ -1,4 +1,6 @@
+const { StatusCodes } = require("http-status-codes");
 const logger = require("../config/logger");
+const AppError = require("../utils/errors/app-error");
 
 class CrudRepository {
   constructor(model) {
@@ -29,6 +31,9 @@ class CrudRepository {
   //find by primary key will always be id and will return only one record
   async get(data) {
     const response = await this.model.findByPk(data);
+    if (!response) {
+      throw new AppError("The record you are looking for is not found", StatusCodes.NOT_FOUND);
+    }
     return response;
   }
 
