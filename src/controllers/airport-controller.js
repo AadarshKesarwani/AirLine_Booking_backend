@@ -55,6 +55,17 @@ async function getAirport(req, res) {
     }
 }
 
+async function updateAirport(req, res) {
+    try {
+        const airport = await AirportService.updateAirport(req.params.id, req.body);
+        SuccessResponse.data = airport;
+        SuccessResponse.message = "Airport updated successfully";
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error = error;
+        return res.status(error.statusCode).json(ErrorResponse);
+    }
+}
 
 //api -> /airports/:id
 //delete request -> delete airport by id
@@ -76,6 +87,7 @@ module.exports = {
     createAirport,
     getAirports,
     getAirport,
+    updateAirport,  
     destroyAirport,
 }
 
