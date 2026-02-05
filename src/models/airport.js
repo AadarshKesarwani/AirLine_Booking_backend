@@ -11,6 +11,20 @@ module.exports = (sequelize, DataTypes) => {
         as: 'city',
         
       });
+
+      // An Airport can have many departing Flights
+      Airport.hasMany(models.Flight, {
+        foreignKey: 'departureAirportId',
+        as: 'departingFlights',
+        onDelete: 'CASCADE',
+      });
+
+      // An Airport can have many arriving Flights
+      Airport.hasMany(models.Flight, {
+        foreignKey: 'arrivalAirportId',
+        as: 'arrivingFlights',
+        onDelete: 'CASCADE',
+      });
     }
 
   }
