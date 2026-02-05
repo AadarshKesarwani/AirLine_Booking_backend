@@ -4,9 +4,11 @@ const router = express.Router();
 
 const { CityController } = require('../../controllers');
 
+const { cityMiddlewares } = require('../../middlewares');
 
 
-router.post('/', CityController.createCity);
+
+router.post('/', cityMiddlewares.validateCreateRequest, CityController.createCity);
 
 
 
