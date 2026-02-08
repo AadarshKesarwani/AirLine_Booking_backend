@@ -4,9 +4,11 @@ const {InfoController,}= require('../../controllers');
 
 
 
+
 const AirplaneRoutes= require('./airplane-routes');
 const CityRoutes= require('./city-routes');
 const AirportRoutes= require('./airport-routes');
+const FlightRoutes= require('./flight-routes');
 
 
 
@@ -15,6 +17,7 @@ const AirportRoutes= require('./airport-routes');
 router.use('/airplanes', AirplaneRoutes);
 router.use('/cities', CityRoutes);
 router.use('/airports', AirportRoutes);
+router.use('/flights', FlightRoutes);
 
 
 

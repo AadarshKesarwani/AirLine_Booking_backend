@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Flight extends Model {
     /**
@@ -10,26 +9,29 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      // 1 Flight belongs to 1 Airplane
+
+      // 1 Flight belongs to 1 Airplane (by airplaneId -> Airplane.id)
       Flight.belongsTo(models.Airplane, {
         foreignKey: 'airplaneId',
         as: 'airplane',
       });
 
-      // 1 Flight belongs to 1 departure Airport
+      // 1 Flight belongs to 1 Departure Airport (by code)
       Flight.belongsTo(models.Airport, {
-        foreignKey: 'code',
-        as: 'departureAirport'
+        foreignKey: 'departureAirportId', // Flights table column
+        targetKey: 'code',                // Airports table column
+        as: 'departureAirport',
       });
 
-      // 1 Flight belongs to 1 arrival Airport
+      // 1 Flight belongs to 1 Arrival Airport (by code)
       Flight.belongsTo(models.Airport, {
-        foreignKey: 'code',
-        as: 'arrivalAirport'
+        foreignKey: 'arrivalAirportId',   // Flights table column
+        targetKey: 'code',                // Airports table column
+        as: 'arrivalAirport',
       });
     }
   }
+
   Flight.init({
     flightNumber: {
       type: DataTypes.STRING,
@@ -40,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     departureAirportId: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING, // stores Airport.code (MUM, DEL)
       allowNull: false,
     },
     arrivalAirportId: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING, // stores Airport.code
       allowNull: false,
     },
     arrivalTime: {
@@ -70,5 +72,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Flight',
   });
+
   return Flight;
 };
