@@ -20,14 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       Flight.belongsTo(models.Airport, {
         foreignKey: 'departureAirportId', // Flights table column
         targetKey: 'code',                // Airports table column
-        as: 'departureAirport',
+        as: 'departure_Airport',
       });
 
       // 1 Flight belongs to 1 Arrival Airport (by code)
       Flight.belongsTo(models.Airport, {
         foreignKey: 'arrivalAirportId',   // Flights table column
         targetKey: 'code',                // Airports table column
-        as: 'arrivalAirport',
+        as: 'arrival_Airport',
       });
     }
   }
