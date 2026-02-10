@@ -112,7 +112,31 @@ async function getAllFlights(query) {
 
 
 
+async function getFlight(id){
+    try {
+        const flight = await flightRepository.get(id);
+        return flight;
+    } catch (error) {
+        if (error.name === "SequelizeValidationError") {
+            const explanation = error.errors.map(err => err.message);
+            throw new AppError(explanation, StatusCodes.BAD_REQUEST);
+        }
+        if(error.StatusCode === StatusCodes.NOT_FOUND){
+            throw new AppError(
+                "The flight you requested is not found",
+                StatusCodes.NOT_FOUND
+            );
+        }
+        throw new AppError(
+            "Cannot fetch data of flight",
+            StatusCodes.INTERNAL_SERVER_ERROR,
+        );
+    }
+} 
+
+
 module.exports = {
     createFlight,
-    getAllFlights   
+    getAllFlights,  
+    getFlight 
 };
